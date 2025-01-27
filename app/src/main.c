@@ -13,10 +13,10 @@ LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
 int main(void)
 {
-
 	LOG_INF("Zephyr Example Application with Timer and .csv file %s\n", APP_VERSION_STRING);
 
-// Initialize the timer and start it
+	/* Initialize the timer and start it */
+
 	init_my_timer();
 	start_my_timer();
 

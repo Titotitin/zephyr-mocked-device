@@ -70,16 +70,15 @@ static int example_sensor_init(const struct device *dev)
 
 // Timer expiry function
 void my_timer_expiry_function(struct k_timer *timer_id) {
-    const struct device *sensor;
-	int ret;
-	struct sensor_value value_x;
-    struct example_sensor_data *data;
-    char line[CONFIG_SIZE_LINE_MAX];
+    const struct device *           sensor;
+	int                             ret;
+	struct sensor_value             value_x;
+    struct example_sensor_data *    data;
+    char                            line[CONFIG_SIZE_LINE_MAX];
 
     LOG_INF("Timer expired");
 
     sensor = DEVICE_DT_GET(DT_NODELABEL(example_sensor));
-
     if (!device_is_ready(sensor)) {
         LOG_ERR("Sensor not ready");
         return;
@@ -113,7 +112,7 @@ void my_timer_expiry_function(struct k_timer *timer_id) {
     }
 
     ret = sensor_channel_get(sensor, SENSOR_CHAN_PROX, &value_x);
-    printk("sensor_sample_get ret: %d  valor del sensor: %d\n", ret, value_x.val1);
+    LOG_INF("sensor_sample_get ret: %d  valor del sensor: %d\n", ret, value_x.val1);
 }
 
 // Timer stop function - el expires timer doesn't have stop function...
