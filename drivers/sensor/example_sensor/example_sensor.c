@@ -30,15 +30,6 @@ struct example_sensor_config {
 
 static int example_sensor_sample_fetch(const struct device *dev, enum sensor_channel chan){
 
-    struct example_sensor_data *data = dev->data;
-
-    if (!data->csv_file) {
-        data->csv_file = fopen(CONFIG_PATH_TO_CSV_FILE, "r");
-        if (!data->csv_file) {
-            LOG_ERR("Error opening file");
-            return -ENOENT;
-        }
-    }
 
     return 0;
 
@@ -65,6 +56,15 @@ static int example_sensor_init(const struct device *dev)
     {
     struct example_sensor_data *data = dev->data;
     data->csv_file = NULL;
+
+    if (!data->csv_file) {
+        data->csv_file = fopen(CONFIG_PATH_TO_CSV_FILE, "r");
+        if (!data->csv_file) {
+            LOG_ERR("Error opening file");
+            return -ENOENT;
+        }
+    }
+
     return 0;
 }
 
