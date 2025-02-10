@@ -58,7 +58,7 @@ static int example_sensor_init(const struct device *dev)
     data->csv_file = NULL;
 
     if (!data->csv_file) {
-        data->csv_file = fopen(CONFIG_PATH_TO_CSV_FILE, "r");
+        data->csv_file = fopen(CONFIG_EXAMPLE_SENSOR_PATH_TO_CSV_FILE, "r");
         if (!data->csv_file) {
             LOG_ERR("Error opening file");
             return -ENOENT;
@@ -74,7 +74,7 @@ void my_timer_expiry_function(struct k_timer *timer_id) {
 	int                             ret;
 	struct sensor_value             value_x;
     struct example_sensor_data *    data;
-    char                            line[CONFIG_SIZE_LINE_MAX];
+    char                            line[CONFIG_EXAMPLE_SENSOR_SIZE_LINE_MAX];
 
     LOG_INF("Timer expired");
 
@@ -146,7 +146,9 @@ void init_my_timer(void) {
 // In your function where you start the timer
 // start a periodic timer that expires once every CONFIG_MY_TIMER_PERIOD
 void start_my_timer(void) {
-    k_timer_start(&my_timer, K_SECONDS(CONFIG_MY_TIMER_INITIAL_DELAY), K_SECONDS(CONFIG_MY_TIMER_PERIOD));
+    k_timer_start(&my_timer,
+                  K_SECONDS(CONFIG_EXAMPLE_SENSOR_MY_TIMER_INITIAL_DELAY),
+                  K_SECONDS(CONFIG_EXAMPLE_SENSOR_MY_TIMER_PERIOD));
 }
 
 K_TIMER_DEFINE(my_timer, my_timer_expiry_function, NULL);
