@@ -20,7 +20,7 @@ struct k_timer my_timer;
 
 //static FILE *csv_file = NULL;
 struct example_sensor_data {
-    int state;
+    int value;
     FILE *csv_file;
 };
 
@@ -42,7 +42,7 @@ static int example_sensor_channel_get(const struct device * dev, enum sensor_cha
         return -ENOTSUP;
     }
 
-    val->val1 = data->state;
+    val->val1 = data->value;
 
     return 0;
 }
@@ -89,7 +89,7 @@ void my_timer_expiry_function(struct k_timer *timer_id) {
     if (fgets(line, sizeof(line), data->csv_file)) {
         int value;
         if (sscanf(line, "%d", &value) == 1) {
-            data->state = value;
+            data->value = value;
         } else {
             LOG_ERR("Error reading file");
             return;
@@ -100,7 +100,7 @@ void my_timer_expiry_function(struct k_timer *timer_id) {
         if (fgets(line, sizeof(line), data->csv_file)) {
             int value;
             if (sscanf(line, "%d", &value) == 1) {
-                data->state = value;
+                data->value = value;
             } else {
                 LOG_ERR("Error reading file");
                 return;
